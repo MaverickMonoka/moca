@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-charcoal text-white font-body;
+    background-image: radial-gradient(circle at 20% 0%, rgba(0, 166, 81, 0.06), transparent 40%),
+      radial-gradient(circle at 90% 10%, rgba(212, 175, 55, 0.05), transparent 35%);
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  ::selection {
+    @apply bg-moca-green/30 text-white;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-moca-green ring-offset-2 ring-offset-charcoal;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply max-w-7xl mx-auto px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply text-xs font-mono uppercase tracking-[0.2em] text-moca-green;
+  }
+  .card-surface {
+    @apply bg-charcoal-light border border-white/10 rounded-2xl;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-moca-gradient px-6 py-3 text-sm font-semibold text-white shadow-glow-green transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/10;
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-6 py-3 text-sm font-semibold text-charcoal shadow-glow-gold transition-transform hover:scale-[1.02] active:scale-[0.98];
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-white/15 bg-charcoal-light px-4 py-3 text-sm text-white placeholder:text-white/40 focus:border-moca-green transition-colors;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80;
+  }
+  .animate-draw-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .sector-accent-Agriculture { @apply bg-moca-green; }
+  .sector-accent-Technology { @apply bg-gold; }
+  .sector-accent-Construction { @apply bg-white/40; }
+  .sector-accent-Manufacturing { @apply bg-white/40; }
+  .sector-accent-Tourism { @apply bg-gold; }
+  .sector-accent-Creative-Industries { @apply bg-moca-green-light; }
+  .sector-accent-Youth { @apply bg-moca-green; }
+  .sector-accent-Women-Owned-Businesses { @apply bg-gold; }
+}
