@@ -1,0 +1,10 @@
+# Publishes the static MOCA point-of-sale PWA in pwa/. No build step is needed.
+# The earlier React/Supabase app remains in moca/ but isn't deployed.
+[build]
+  publish = "pwa"
+  command = ""
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
