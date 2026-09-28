@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MOCA — Mobile Commerce Africa</title>
+<meta name="description" content="Business operating system for African SMEs: point of sale, stock, WhatsApp orders, reports, AI advisor and loan readiness.">
+<meta name="theme-color" content="#0b0d12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MOCA">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d12;--panel:#141821;--panel2:#1a1f2b;--line:#252b38;--text:#f4f5f7;--muted:#9aa3b2;--amber:#f59e0b;--amber2:#ffb936;--green:#22c55e;--red:#ef4444;--blue:#60a5fa;--side:236px;--nav:64px;box-sizing:border-box}
+html{color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,h4,.sg{font-family:"Space Grotesk",Inter,system-ui,sans-serif;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.app{display:grid;grid-template-columns:var(--side) 1fr;min-height:100vh}
+aside{background:#0e1118;border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:10px;font:700 18px "Space Grotesk";padding:4px 10px 16px}
+.logo{width:32px;height:32px;border-radius:9px;background:var(--amber);color:#1a1200;display:grid;place-items:center;font-weight:700;font-size:14px}
+.ni{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--muted);cursor:pointer;border:0;background:none;width:100%;text-align:left;font-weight:500}
+.ni:hover{background:#ffffff08;color:var(--text)}
+.ni.on{background:#f59e0b1f;color:var(--amber)}
+.ni svg,.bn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.side-foot{margin-top:auto;font-size:12px;color:var(--muted);padding:10px}
+main{padding:20px 22px 40px;max-width:1080px;width:100%;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.top h1{font-size:24px}
+.top .sub{color:var(--muted);font-size:13px}
+.bn-wrap{display:none}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card h3{font-size:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.kpi small{display:block;color:var(--muted);font-size:12px}
+.kpi strong{font:700 24px "Space Grotesk";display:block;margin-top:2px}
+.kpi .d{font-size:12px;color:var(--muted)}
+.up{color:var(--green)}.dn{color:var(--red)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:transparent;padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;transition:.15s}
+.btn:hover{background:#ffffff0a;border-color:#3a4356}
+.btn.pri{background:var(--amber);border-color:var(--amber);color:#1a1200}.btn.pri:hover{background:var(--amber2)}
+.btn.red{color:var(--red)}.btn.sm{padding:6px 11px;font-size:13px}.btn.full{width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:99px;padding:6px 14px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--amber);border-color:var(--amber);color:#1a1200;font-weight:600}
+.pill{display:inline-block;font-size:11px;padding:2px 9px;border-radius:99px;background:#22c55e22;color:var(--green);font-weight:600;white-space:nowrap}
+.pill.a{background:#f59e0b22;color:var(--amber)}.pill.r{background:#ef444422;color:var(--red)}.pill.b{background:#60a5fa22;color:var(--blue)}.pill.g{background:#ffffff14;color:var(--muted)}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px}
+input:focus,select:focus,textarea:focus{outline:2px solid #f59e0b88;border-color:transparent}
+label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .m{color:var(--muted);font-size:12px}
+.grow{flex:1;min-width:0}
+.tr{text-align:right}
+.empty{text-align:center;padding:38px 16px;color:var(--muted)}
+.empty h3{color:var(--text);margin-bottom:6px;font-size:18px}
+.empty .cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.chart{width:100%;height:auto;display:block}
+.bar{height:8px;background:var(--panel2);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--amber);border-radius:9px}
+/* POS */
+.pos{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:12px}
+.pt{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-height:96px;transition:.15s}
+.pt:hover{border-color:#f59e0b77}.pt:active{transform:scale(.97)}
+.pt[disabled]{opacity:.4;cursor:not-allowed}
+.pt b{font-size:14px;line-height:1.25}.pt .pr{color:var(--amber);font:700 15px "Space Grotesk";margin-top:auto}.pt .st{font-size:11px;color:var(--muted)}
+.cart{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;position:sticky;top:16px}
+.ci{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+.q{display:flex;align-items:center;gap:4px}.q button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);cursor:pointer}
+.tot{display:flex;justify-content:space-between;font:700 22px "Space Grotesk";margin:12px 0}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button{padding:9px;border-radius:9px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-weight:600;font-size:13px}
+.seg button.on{border-color:var(--amber);color:var(--amber);background:#f59e0b14}
+.cartbar{display:none}
+/* modal + toast */
+#modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;z-index:100;padding:16px;overflow:auto}
+#modal.open{display:grid}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;width:100%;max-width:460px;max-height:92vh;overflow:auto;position:relative}
+.box h3{font-size:20px;margin-bottom:4px}.box .sub{color:var(--muted);font-size:13px;margin:0 0 6px}
+.x{position:absolute;top:10px;right:14px;background:none;border:0;color:var(--muted);font-size:24px;cursor:pointer}
+.mact{display:flex;gap:10px;margin-top:18px}.mact .btn{flex:1}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:#222836;border:1px solid var(--line);padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:200;max-width:90vw}
+#toast.on{opacity:1;transform:translateX(-50%)}
+textarea.mono{font:12px/1.4 ui-monospace,Menlo,monospace;min-height:180px}
+/* onboarding */
+.ob{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(700px 340px at 50% 0,#f59e0b26,transparent 70%)}
+.ob .box{max-width:440px;max-height:none}
+.ob .hl{font:700 44px "Space Grotesk";color:var(--amber);line-height:1}
+.gauge{display:grid;place-items:center}.gauge svg{width:220px}
+.tip{border-left:3px solid var(--amber);background:var(--panel2);border-radius:0 12px 12px 0;padding:12px 14px;margin-bottom:10px}
+.tip.warn{border-color:var(--red)}.tip.good{border-color:var(--green)}
+.tip b{display:block;margin-bottom:2px}.tip p{margin:0;color:var(--muted);font-size:14px}
+.tip .btn{margin-top:8px}
+.lock{text-align:center;padding:36px 18px}
+.lock h3{font-size:20px;margin-bottom:6px}.lock p{color:var(--muted);max-width:420px;margin:0 auto 16px}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.menu .card{cursor:pointer;display:flex;flex-direction:column;gap:8px}
+.menu svg{width:24px;height:24px;stroke:var(--amber);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);font-weight:500;font-size:12px}td.n,th.n{text-align:right}
+@media(max-width:899px){
+ .app{display:block}aside{display:none}
+ main{padding:14px 14px calc(var(--nav) + 90px + env(safe-area-inset-bottom,0px))}
+ .bn-wrap{display:flex;position:fixed;left:0;right:0;bottom:0;background:#0e1118f2;backdrop-filter:blur(12px);border-top:1px solid var(--line);z-index:40;padding-bottom:env(safe-area-inset-bottom,0px)}
+ .bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 0 8px;font-size:11px;color:var(--muted);background:none;border:0;cursor:pointer}
+ .bn.on{color:var(--amber)}
+ .g4{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}
+ .pos{display:block}
+ .cart{position:fixed;left:0;right:0;bottom:0;border-radius:20px 20px 0 0;max-height:86vh;overflow:auto;z-index:70;transform:translateY(105%);transition:.28s;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+ .cart.open{transform:none}
+ .cartbar{display:flex;position:fixed;left:14px;right:14px;bottom:calc(var(--nav) + 10px + env(safe-area-inset-bottom,0px));z-index:45;background:var(--amber);color:#1a1200;border:0;border-radius:14px;padding:14px 18px;font-weight:700;justify-content:space-between;cursor:pointer;box-shadow:0 10px 30px #000a}
+ .cartbar[hidden]{display:none}
+ #toast{bottom:150px}
+}
+@media(max-width:520px){.top h1{font-size:21px}.kpi strong{font-size:20px}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="modal"></div>
+<div id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+var K='moca.app.v1',DAY=864e5;
+var S=null,ui={view:'home',cat:'All',q:'',cart:{},dtype:'R',dval:'',method:'Cash',tender:'',cashier:null,cartOpen:false,ofilter:'Open',period:30,mk:'All',slow:false,ol:[]};
+var PL={starter:{n:'Starter',price:149,prod:100,users:1,ai:0,mk:0},growth:{n:'Growth',price:399,prod:1e9,users:5,ai:1,mk:0},pro:{n:'Pro',price:899,prod:1e9,users:1e9,ai:1,mk:1},enterprise:{n:'Enterprise',price:0,prod:1e9,users:1e9,ai:1,mk:1}};
+var $=function(s,r){return (r||document).querySelector(s)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var R=function(n){return 'R '+(Math.round(n*100)/100).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2})};
+var R0=function(n){return 'R '+Math.round(n).toLocaleString('en-ZA')};
+var uid=function(){return Math.random().toString(36).slice(2,9)};
+var sod=function(t){var d=new Date(t);d.setHours(0,0,0,0);return d.getTime()};
+var num=function(v){var n=parseFloat(String(v).replace(',','.'));return isFinite(n)?n:0};
+var IC={home:'<path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/>',pos:'<circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h3l2.5 12h11L21 7H6"/>',stock:'<path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/>',orders:'<path d="M21 12a9 9 0 1 1-3.6-7.2L21 3v5h-5"/>',more:'<circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>',reports:'<path d="M4 20V4M4 20h16M9 20v-8M14 20V8M19 20v-5"/>',advisor:'<path d="m3 17 6-6 4 4 8-8M15 7h6v6"/>',loan:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/>',staff:'<circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M16 4.5a3.5 3.5 0 0 1 0 7M22 21c0-3-1.7-5-4-5.7"/>',market:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>'};
+var ic=function(n){return '<svg viewBox="0 0 24 24">'+IC[n]+'</svg>'};
+var NAV=[['home','Home'],['pos','Sell'],['stock','Stock'],['orders','Orders'],['reports','Reports'],['advisor','AI Advisor'],['loan','Loan Readiness'],['staff','Staff'],['market','MOCA Market'],['settings','Settings']];
+var BN=[['home','Home'],['pos','Sell'],['stock','Stock'],['orders','Orders'],['more','More']];
+
+/* ---------- storage ---------- */
+function load(){try{S=JSON.parse(localStorage.getItem(K)||'null')}catch(e){S=null}}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function toast(t){var el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){el.classList.remove('on')},2400)}
+function modal(h){var m=$('#modal');m.innerHTML='<div class="box"><button class="x" data-a="close">×</button>'+h+'</div>';m.classList.add('open')}
+function closeM(){var m=$('#modal');m.classList.remove('open');m.innerHTML=''}
+function plan(){return PL[S.plan]||PL.growth}
+function newState(o){return {v:1,biz:{name:o.name,owner:o.owner,phone:o.phone||'',type:o.type||'',reg:''},plan:o.plan||'growth',products:[],sales:[],orders:[],staff:[{id:uid(),name:o.owner,role:'Owner'}],quotes:[],seq:1,oseq:1}}
+
+/* ---------- data helpers ---------- */
+function cost(s){return s.items.reduce(function(a,i){return a+i.cost*i.qty},0)}
+function inR(a,b){return S.sales.filter(function(s){return s.ts>=a&&s.ts<b})}
+function sum(arr,f){return arr.reduce(function(a,x){return a+f(x)},0)}
+function tot(arr){return sum(arr,function(s){return s.total})}
+function prof(arr){return sum(arr,function(s){return s.total-cost(s)})}
+function series(days,step){var out=[],t0=sod(Date.now()),n=Math.ceil(days/step);for(var i=n-1;i>=0;i--){var a=t0-i*step*DAY-(step-1)*DAY,b=a+step*DAY,d=new Date(a);out.push({l:step===1?(days<=7?['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]:d.getDate()):(d.getDate()+'/'+(d.getMonth()+1)),v:tot(inR(a,b))})}return out}
+function velocity(pid,days){var a=Date.now()-days*DAY,q=0;S.sales.forEach(function(s){if(s.ts>=a)s.items.forEach(function(i){if(i.pid===pid)q+=i.qty})});return q/days}
+function soldSince(pid,days){var a=Date.now()-days*DAY;return S.sales.some(function(s){return s.ts>=a&&s.items.some(function(i){return i.pid===pid})})}
+function low(){return S.products.filter(function(p){return p.stock<=p.reorder})}
+function prod(id){return S.products.find(function(p){return p.id===id})}
+function chart(d){var h=130,w=d.length*(d.length>16?26:44),bw=d.length>16?16:26,mx=Math.max(1,Math.max.apply(null,d.map(function(x){return x.v})));var s='<svg class="chart" viewBox="0 0 '+w+' '+(h+34)+'" role="img" aria-label="Sales chart">';d.forEach(function(x,i){var bh=Math.max(2,x.v/mx*h),cx=i*(w/d.length)+(w/d.length)/2;s+='<rect x="'+(cx-bw/2)+'" y="'+(h-bh+16)+'" width="'+bw+'" height="'+bh+'" rx="4" fill="#f59e0b" opacity="'+(x.v?1:.25)+'"/>';if(d.length<=8&&x.v)s+='<text x="'+cx+'" y="'+(h-bh+11)+'" text-anchor="middle" font-size="9" fill="#9aa3b2">'+Math.round(x.v)+'</text>';if(d.length<=8||i%3===0)s+='<text x="'+cx+'" y="'+(h+30)+'" text-anchor="middle" font-size="10" fill="#9aa3b2">'+x.l+'</text>'});return s+'</svg>'}
+function head(t,sub,act){return '<div class="top"><div><h1>'+t+'</h1>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div><div>'+(act||'')+'</div></div>'}
+function locked(t,why){return '<div class="card lock"><h3>'+t+'</h3><p>'+why+'</p><button class="btn pri" data-a="nav" data-v="settings">Change plan</button></div>'}
+function empty(t,p,btns){return '<div class="card empty"><h3>'+t+'</h3><div>'+p+'</div><div class="cta">'+(btns||'')+'</div></div>'}
+var EMPTYBTN='<button class="btn pri" data-a="newprod">Add product</button><button class="btn" data-a="demo">Load demo data</button>';
+
+/* ---------- demo ---------- */
+function demo(){
+  var seed=11,rnd=function(){seed=(seed*16807)%2147483647;return seed/2147483647};
+  var P=[['White bread 700g','Bakery',17,13.4,40,15,9],['Brown bread 700g','Bakery',16,12.6,30,12,6],['Maize meal 10kg','Groceries',119,98,14,10,5],['Cooking oil 2L','Groceries',79,66,22,8,4],['Sugar 2.5kg','Groceries',64,54.5,18,8,4],['Rice 2kg','Groceries',52,43.5,25,8,4],['Full cream milk 1L','Dairy',22,18.8,5,12,8],['Eggs tray 30','Dairy',84,71,9,6,3],['Airtime R30','Airtime',30,28.5,200,0,10],['Cold drink 2L','Drinks',28,22.5,36,12,7],['Bar soap 175g','Household',12,9,48,12,3],['Washing powder 1kg','Household',49,40,16,6,3],['Instant noodles','Groceries',7,5.2,90,30,8],['Candles 6pk','Household',38,26,18,4,0]];
+  var staff=[{id:uid(),name:S.biz.owner,role:'Owner'},{id:uid(),name:'Thabo',role:'Cashier'},{id:uid(),name:'Lerato',role:'Cashier'}];
+  S.staff=staff;
+  S.products=P.map(function(p){return {id:uid(),name:p[0],cat:p[1],price:p[2],cost:p[3],stock:p[4],reorder:p[5],w:p[6]}});
+  var pool=[];S.products.forEach(function(p){for(var i=0;i<p.w;i++)pool.push(p)});delete S.products.w;
+  S.sales=[];var now=Date.now();
+  for(var d=44;d>=0;d--){var dow=new Date(sod(now)-d*DAY).getDay();var n=Math.round((6+rnd()*5+(45-d)*.13)*((dow===5||dow===6)?1.35:1));
+    for(var k=0;k<n;k++){var ts=Math.min(sod(now)-d*DAY+(7+rnd()*12)*36e5,now-1000*(k+1)),items=[],lines=1+Math.floor(rnd()*3);
+      for(var l=0;l<lines;l++){var p=pool[Math.floor(rnd()*pool.length)];if(items.some(function(i){return i.pid===p.id}))continue;items.push({pid:p.id,name:p.name,qty:p.cat==='Airtime'?1:1+Math.floor(rnd()*3),price:p.price,cost:p.cost})}
+      var sub=sum(items,function(i){return i.price*i.qty}),r=rnd();
+      S.sales.push({id:uid(),no:S.seq++,ts:ts,items:items,sub:sub,disc:0,total:sub,method:r<.62?'Cash':(r<.82?'Card':'EFT'),cashier:staff[Math.floor(rnd()*3)].name,src:'pos'})}}
+  S.sales.sort(function(a,b){return a.ts-b.ts});
+  S.products.forEach(function(p){delete p.w});
+  save();
+}
+
+/* ---------- views ---------- */
+function home(){
+  if(!S.products.length)return head('Welcome, '+esc(S.biz.owner),esc(S.biz.name))+empty('Let’s set up your shop','Add your products to start selling, or explore with sample data.',EMPTYBTN);
+  var t0=sod(Date.now()),td=inR(t0,t0+DAY),open=S.orders.filter(function(o){return o.status!=='Delivered'&&o.status!=='Cancelled'}).length,lw=low(),ls=loanScore();
+  var tip='';if(plan().ai){var a=advice()[0];if(a)tip='<div class="tip '+a.t+'"><b>'+esc(a.title)+'</b><p>'+esc(a.body)+'</p></div>'}
+  return head('Good day, '+esc(S.biz.owner.split(' ')[0]),esc(S.biz.name)+' · '+new Date().toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long'}),'<button class="btn pri" data-a="nav" data-v="pos">＋ New sale</button>')+
+  '<div class="grid g4"><div class="card kpi"><small>Sales today</small><strong>'+R0(tot(td))+'</strong><span class="d">'+td.length+' sales</span></div>'+
+  '<div class="card kpi"><small>Profit today</small><strong>'+R0(prof(td))+'</strong><span class="d">after cost of goods</span></div>'+
+  '<div class="card kpi"><small>Open orders</small><strong>'+open+'</strong><span class="d">WhatsApp &amp; delivery</span></div>'+
+  '<div class="card kpi"><small>Low stock</small><strong class="'+(lw.length?'dn':'')+'">'+lw.length+'</strong><span class="d">items to reorder</span></div></div>'+
+  '<div class="grid g2" style="margin-top:14px;grid-template-columns:1.5fr 1fr"><div class="card"><h3>Last 7 days</h3>'+chart(series(7,1))+'</div>'+
+  '<div class="card"><h3>Reorder soon</h3>'+(lw.length?lw.slice(0,5).map(function(p){return '<div class="row"><div class="grow">'+esc(p.name)+'<div class="m">Reorder at '+p.reorder+'</div></div><span class="pill '+(p.stock===0?'r':'a')+'">'+p.stock+' left</span></div>'}).join(''):'<div class="m" style="color:var(--muted)">All stock levels look healthy ✓</div>')+'</div></div>'+
+  '<div class="grid g2" style="margin-top:14px">'+(tip?'<div class="card"><h3>AI Business Advisor <button class="btn sm" data-a="nav" data-v="advisor">All</button></h3>'+tip+'</div>':'')+
+  '<div class="card"><h3>Loan readiness <button class="btn sm" data-a="nav" data-v="loan">Details</button></h3>'+(plan().ai?'<div style="display:flex;align-items:center;gap:16px"><div class="sg" style="font-size:44px;font-weight:700;color:var(--amber)">'+ls.score+'</div><div class="grow"><div class="bar"><i style="width:'+ls.score+'%"></i></div><div class="m" style="color:var(--muted);font-size:13px;margin-top:6px">'+ls.label+'</div></div></div>':'<div style="color:var(--muted)">Available on Growth and above.</div>')+'</div></div>';
+}
+
+function posFiltered(){var q=ui.q.toLowerCase();return S.products.filter(function(p){return (ui.cat==='All'||p.cat===ui.cat)&&(!q||p.name.toLowerCase().indexOf(q)>-1)})}
+function grid(){var l=posFiltered();return l.length?l.map(function(p){var inC=ui.cart[p.id]||0;return '<button class="pt" data-a="add" data-id="'+p.id+'"'+(p.stock-inC<=0?' disabled':'')+'><b>'+esc(p.name)+'</b><span class="st">'+(p.stock-inC<=0?'Out of stock':(p.stock-inC)+' in stock')+'</span><span class="pr">'+R(p.price)+'</span></button>'}).join(''):'<div class="empty" style="grid-column:1/-1">No products match.</div>'}
+function cartCalc(){var lines=Object.keys(ui.cart).map(function(id){var p=prod(id);return p?{p:p,q:ui.cart[id]}:null}).filter(Boolean),sub=sum(lines,function(l){return l.p.price*l.q}),dv=num(ui.dval),d=ui.dtype==='%'?sub*Math.min(dv,100)/100:Math.min(dv,sub);return {lines:lines,sub:sub,disc:d,total:Math.max(0,sub-d),count:sum(lines,function(l){return l.q})}}
+function cartHtml(){var c=cartCalc();
+  if(!c.lines.length)return '<h3 class="sg" style="margin-bottom:8px">Current sale</h3><div class="empty" style="padding:24px 8px">Tap products to add them.</div>';
+  var change=ui.method==='Cash'&&num(ui.tender)>=c.total&&c.total>0?num(ui.tender)-c.total:null;
+  return '<h3 class="sg" style="display:flex;justify-content:space-between;margin-bottom:6px">Current sale <button class="btn sm red" data-a="clear">Clear</button></h3>'+
+  c.lines.map(function(l){return '<div class="ci"><div class="grow"><b style="font-size:14px">'+esc(l.p.name)+'</b><div class="m" style="color:var(--muted);font-size:12px">'+R(l.p.price)+' each</div></div><div class="q"><button data-a="dec" data-id="'+l.p.id+'">−</button><b style="min-width:22px;text-align:center">'+l.q+'</b><button data-a="inc" data-id="'+l.p.id+'">+</button></div><b style="min-width:66px;text-align:right">'+R(l.p.price*l.q)+'</b></div>'}).join('')+
+  '<label>Discount</label><div style="display:flex;gap:8px"><div class="seg" style="grid-template-columns:1fr 1fr;width:100px"><button data-a="dtype" data-t="R" class="'+(ui.dtype==='R'?'on':'')+'">R</button><button data-a="dtype" data-t="%" class="'+(ui.dtype==='%'?'on':'')+'">%</button></div><input id="dval" inputmode="decimal" placeholder="0" value="'+esc(ui.dval)+'"></div>'+
+  '<div class="tot"><span>Total</span><span id="ctot">'+R(c.total)+'</span></div>'+(c.disc>0?'<div class="m" style="color:var(--green);font-size:13px;margin-top:-8px;margin-bottom:8px">Discount applied: '+R(c.disc)+'</div>':'')+
+  '<div class="seg">'+['Cash','Card','EFT'].map(function(m){return '<button data-a="method" data-m="'+m+'" class="'+(ui.method===m?'on':'')+'">'+m+'</button>'}).join('')+'</div>'+
+  (ui.method==='Cash'?'<label>Cash received</label><input id="tender" inputmode="decimal" placeholder="'+c.total.toFixed(2)+'" value="'+esc(ui.tender)+'">'+(change!==null?'<div class="m" style="color:var(--green);margin-top:6px">Change: <b>'+R(change)+'</b></div>':''):'')+
+  '<button class="btn pri full" style="margin-top:14px;padding:14px" data-a="checkout">Complete sale · '+R(c.total)+'</button>';
+}
+function pos(){
+  if(!S.products.length)return head('Sell','Point of Sale')+empty('No products yet','Add products so you can start ringing up sales.',EMPTYBTN);
+  var cats=['All'].concat(S.products.map(function(p){return p.cat}).filter(function(v,i,a){return v&&a.indexOf(v)===i}));
+  if(!ui.cashier||!S.staff.some(function(s){return s.name===ui.cashier}))ui.cashier=S.staff[0].name;
+  return head('Sell','Cashier: '+(S.staff.length>1?'<select id="cashier" style="width:auto;padding:4px 8px;display:inline-block">'+S.staff.map(function(s){return '<option'+(s.name===ui.cashier?' selected':'')+'>'+esc(s.name)+'</option>'}).join('')+'</select>':esc(ui.cashier)))+
+  '<div class="pos"><div><input id="pq" placeholder="Search products…" value="'+esc(ui.q)+'"><div class="chips" style="margin-top:10px">'+cats.map(function(c){return '<button class="chip'+(ui.cat===c?' on':'')+'" data-a="cat" data-c="'+esc(c)+'">'+esc(c)+'</button>'}).join('')+'</div><div class="pgrid" id="pgrid">'+grid()+'</div></div>'+
+  '<div class="cart'+(ui.cartOpen?' open':'')+'" id="cart">'+cartHtml()+'</div></div>'+
+  '<button class="cartbar" id="cartbar" data-a="opencart"></button>';
+}
+function refreshPos(keepFocus){var g=$('#pgrid');if(g)g.innerHTML=grid();var c=$('#cart');if(c){var f=document.activeElement&&document.activeElement.id;c.innerHTML=(ui.cartOpen&&window.innerWidth<900?'<button class="x" data-a="closecart">×</button>':'')+cartHtml();if(f&&keepFocus){var e=$('#'+f);if(e){e.focus();try{e.setSelectionRange(e.value.length,e.value.length)}catch(x){}}}}
+  var b=$('#cartbar'),k=cartCalc();if(b){b.hidden=!k.count||ui.cartOpen;b.innerHTML='<span>🛒 '+k.count+' item'+(k.count===1?'':'s')+'</span><span>'+R(k.total)+'</span>'}}
+
+function stock(){
+  var q=ui.q.toLowerCase(),l=S.products.filter(function(p){return (!q||p.name.toLowerCase().indexOf(q)>-1||(p.cat||'').toLowerCase().indexOf(q)>-1)&&(!ui.slow||p.stock<=p.reorder)});
+  var val=sum(S.products,function(p){return p.stock*p.cost}),lim=plan().prod;
+  return head('Stock',S.products.length+' products · stock value '+R0(val),'<button class="btn" data-a="export" data-w="stock">Export</button> <button class="btn pri" data-a="newprod">＋ Add</button>')+
+  (lim<1e9?'<div class="m" style="color:var(--muted);font-size:12px;margin:-8px 0 10px">Starter plan: '+S.products.length+' of '+lim+' products used</div>':'')+
+  '<input id="sq" placeholder="Search stock…" value="'+esc(ui.q)+'"><div class="chips" style="margin:10px 0"><button class="chip'+(!ui.slow?' on':'')+'" data-a="slow" data-v="0">All</button><button class="chip'+(ui.slow?' on':'')+'" data-a="slow" data-v="1">Low stock ('+low().length+')</button></div>'+
+  '<div class="card" id="slist">'+stockList(l)+'</div>';
+}
+function stockList(l){if(!S.products.length)return '<div class="empty"><h3>No products yet</h3><div class="cta">'+EMPTYBTN+'</div></div>';if(!l.length)return '<div class="empty">No products found.</div>';
+  return l.map(function(p){var m=p.price>0?Math.round((p.price-p.cost)/p.price*100):0;return '<div class="row"><div class="grow"><b>'+esc(p.name)+'</b><div class="m">'+esc(p.cat||'—')+' · '+R(p.price)+' · cost '+R(p.cost)+' · <span class="'+(m<12?'dn':'up')+'">'+m+'% margin</span></div></div><div class="tr"><span class="pill '+(p.stock===0?'r':p.stock<=p.reorder?'a':'')+'">'+p.stock+' in stock</span><div style="margin-top:6px;display:flex;gap:6px;justify-content:flex-end"><button class="btn sm" data-a="restock" data-id="'+p.id+'">＋ Stock</button><button class="btn sm" data-a="editprod" data-id="'+p.id+'">Edit</button></div></div></div>'}).join('')}
+
+var ST=['New','Packed','Out for delivery','Delivered'];
+function orders(){
+  var f=ui.ofilter,l=S.orders.filter(function(o){return f==='Open'?(o.status!=='Delivered'&&o.status!=='Cancelled'):o.status===f}).sort(function(a,b){return b.ts-a.ts});
+  return head('WhatsApp Orders','Capture, pack and deliver','<button class="btn pri" data-a="neworder">＋ New order</button>')+
+  '<div class="chips" style="margin-bottom:12px">'+['Open','Delivered','Cancelled'].map(function(x){return '<button class="chip'+(f===x?' on':'')+'" data-a="ofilter" data-f="'+x+'">'+x+'</button>'}).join('')+'</div>'+
+  (l.length?l.map(function(o){var i=ST.indexOf(o.status),next=ST[i+1],cls=o.status==='Delivered'?'':(o.status==='Cancelled'?'r':'a'),wa=o.phone?'https://wa.me/'+o.phone.replace(/\D/g,'').replace(/^0/,'27')+'?text='+encodeURIComponent('Hi '+o.customer+', your '+S.biz.name+' order #'+o.no+' is now: '+o.status+'. Total '+R(o.total)+'.'):'';
+    return '<div class="card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;gap:8px"><div><b>#'+o.no+' · '+esc(o.customer)+'</b><div class="m" style="color:var(--muted);font-size:12px">'+new Date(o.ts).toLocaleString('en-ZA',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+(o.phone?' · '+esc(o.phone):'')+' · '+esc(o.method)+'</div></div><span class="pill '+cls+'">'+o.status+'</span></div>'+
+    '<div style="margin:10px 0;color:var(--muted);font-size:14px">'+o.items.map(function(i){return i.qty+' × '+esc(i.name)}).join(', ')+'</div><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><b class="sg" style="font-size:18px">'+R(o.total)+'</b><div style="display:flex;gap:6px;flex-wrap:wrap">'+
+    (wa?'<a class="btn sm" target="_blank" rel="noopener noreferrer" href="'+wa+'">💬 Message</a>':'')+(next&&o.status!=='Cancelled'?'<button class="btn sm pri" data-a="advance" data-id="'+o.id+'">Mark '+next+'</button>':'')+(o.status!=='Delivered'&&o.status!=='Cancelled'?'<button class="btn sm red" data-a="cancelorder" data-id="'+o.id+'">Cancel</button>':'')+'</div></div></div>'}).join(''):empty('No '+f.toLowerCase()+' orders','Orders from WhatsApp chats show up here.',f==='Open'?'<button class="btn pri" data-a="neworder">＋ New order</button>':''));
+}
+
+function reports(){
+  if(!S.sales.length)return head('Reports')+empty('No sales yet','Reports appear as soon as you record sales.',EMPTYBTN);
+  var p=ui.period,a=sod(Date.now())-(p-1)*DAY,l=inR(a,Date.now()+1),prev=inR(a-p*DAY,a),rev=tot(l),pr=prof(l),dv=tot(prev)?Math.round((rev/tot(prev)-1)*100):null;
+  var by={};l.forEach(function(s){s.items.forEach(function(i){var o=by[i.name]||(by[i.name]={q:0,r:0,p:0});o.q+=i.qty;o.r+=i.qty*i.price;o.p+=i.qty*(i.price-i.cost)})});
+  var top=Object.keys(by).map(function(k){return [k,by[k]]}).sort(function(x,y){return y[1].p-x[1].p}).slice(0,6);
+  var pm={};l.forEach(function(s){pm[s.method]=(pm[s.method]||0)+s.total});var cs={};l.forEach(function(s){var o=cs[s.cashier]||(cs[s.cashier]={n:0,t:0});o.n++;o.t+=s.total});
+  return head('Reports',p+' day summary','<button class="btn" data-a="export" data-w="sales">Export</button>')+
+  '<div class="chips" style="margin-bottom:12px">'+[7,30,90].map(function(x){return '<button class="chip'+(p===x?' on':'')+'" data-a="period" data-p="'+x+'">'+x+' days</button>'}).join('')+'</div>'+
+  '<div class="grid g4"><div class="card kpi"><small>Revenue</small><strong>'+R0(rev)+'</strong>'+(dv!==null?'<span class="d '+(dv>=0?'up':'dn')+'">'+(dv>=0?'▲':'▼')+' '+Math.abs(dv)+'% vs previous</span>':'')+'</div><div class="card kpi"><small>Gross profit</small><strong>'+R0(pr)+'</strong><span class="d">'+(rev?Math.round(pr/rev*100):0)+'% margin</span></div><div class="card kpi"><small>Transactions</small><strong>'+l.length+'</strong></div><div class="card kpi"><small>Average basket</small><strong>'+R0(l.length?rev/l.length:0)+'</strong></div></div>'+
+  '<div class="card" style="margin-top:14px"><h3>Revenue'+(p===90?' (weekly)':' (daily)')+'</h3>'+chart(p===90?series(91,7):series(p,1))+'</div>'+
+  '<div class="grid g2" style="margin-top:14px"><div class="card"><h3>Top products by profit</h3><table><tr><th>Product</th><th class="n">Qty</th><th class="n">Profit</th></tr>'+top.map(function(t){return '<tr><td>'+esc(t[0])+'</td><td class="n">'+t[1].q+'</td><td class="n">'+R0(t[1].p)+'</td></tr>'}).join('')+'</table></div>'+
+  '<div class="card"><h3>Payment methods</h3>'+Object.keys(pm).map(function(k){var pc=rev?Math.round(pm[k]/rev*100):0;return '<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between"><span>'+esc(k)+'</span><b>'+R0(pm[k])+' · '+pc+'%</b></div><div class="bar"><i style="width:'+pc+'%"></i></div></div>'}).join('')+'<h3 style="margin-top:18px">Cashier performance</h3>'+Object.keys(cs).map(function(k){return '<div class="row"><span>'+esc(k)+'</span><span class="m">'+cs[k].n+' sales · <b style="color:var(--text)">'+R0(cs[k].t)+'</b></span></div>'}).join('')+'</div></div>';
+}
+
+function advice(){
+  var out=[],now=Date.now();if(!S.sales.length)return [{t:'tip',title:'Record sales to unlock insights',body:'Ring up a few sales and MOCA will start suggesting restocking, pricing and growth actions.'}];
+  S.products.forEach(function(p){var v=velocity(p.id,14),dl=v>0?p.stock/v:null;if(p.stock===0&&v>0)out.push({t:'warn',k:0,title:p.name+' is out of stock',body:'It sells about '+v.toFixed(1)+' a day. Every day out of stock is lost profit.',q:p.id});else if(dl!==null&&(dl<=5||p.stock<=p.reorder))out.push({t:'warn',k:1,title:'Restock '+p.name,body:'About '+Math.max(1,Math.round(dl))+' day'+(Math.round(dl)===1?'':'s')+' of stock left at your current pace ('+p.stock+' units).',q:p.id})});
+  S.products.forEach(function(p){var m=p.price>0?(p.price-p.cost)/p.price:0;if(soldSince(p.id,30)&&m<.12&&p.cost>0){var np=Math.ceil(p.cost/(1-.15)*2)/2;out.push({t:'tip',k:2,title:'Thin margin on '+p.name,body:'You keep only '+Math.round(m*100)+'%. Moving the price to about '+R(np)+' would give a 15% margin.'})}});
+  var dead=S.products.filter(function(p){return p.stock>0&&!soldSince(p.id,30)});dead.slice(0,2).forEach(function(p){out.push({t:'tip',k:3,title:p.name+' hasn’t sold in 30 days',body:R0(p.stock*p.cost)+' of cash is tied up. Try a bundle or a small discount to free it.'})});
+  var t0=sod(now),a=tot(inR(t0-6*DAY,t0+DAY)),b=tot(inR(t0-13*DAY,t0-6*DAY));if(b>0){var ch=Math.round((a/b-1)*100);out.push({t:ch>=0?'good':'warn',k:4,title:'Sales are '+(ch>=0?'up ':'down ')+Math.abs(ch)+'% week on week',body:ch>=0?'Keep your fast movers stocked to hold the momentum.':'Check your best sellers are in stock and consider a weekend special.'})}
+  var dw=[0,0,0,0,0,0,0],dc=[0,0,0,0,0,0,0];for(var i=0;i<28;i++){var s=t0-i*DAY,d=new Date(s).getDay();dw[d]+=tot(inR(s,s+DAY));dc[d]++}
+  var best=0;for(i=1;i<7;i++)if(dw[i]/dc[i]>dw[best]/dc[best])best=i;out.push({t:'good',k:5,title:['Sundays','Mondays','Tuesdays','Wednesdays','Thursdays','Fridays','Saturdays'][best]+' are your best day',body:'Average '+R0(dw[best]/dc[best])+' a day. Stock up before and staff up on that day.'});
+  var pm=tot(inR(t0-29*DAY,t0+DAY)),cash=tot(inR(t0-29*DAY,t0+DAY).filter(function(s){return s.method==='Cash'}));if(pm&&cash/pm>.75)out.push({t:'tip',k:6,title:'Most sales are cash',body:'Card and EFT payments leave a bank trail that lenders trust. Offer them at the till.'});
+  return out.sort(function(x,y){return (x.k||9)-(y.k||9)});
+}
+function advisor(){
+  if(!plan().ai)return head('AI Business Advisor')+locked('AI insights are on Growth and above','Get restocking alerts, pricing suggestions and growth tips based on your own sales.');
+  return head('AI Business Advisor','Suggestions from your own sales and stock')+advice().map(function(a){return '<div class="tip '+a.t+'"><b>'+esc(a.title)+'</b><p>'+esc(a.body)+'</p>'+(a.q?'<button class="btn sm" data-a="restock" data-id="'+a.q+'">＋ Add stock</button> <button class="btn sm" data-a="nav" data-v="market">Find supplier</button>':'')+'</div>'}).join('');
+}
+function loanScore(){
+  var now=Date.now(),t0=sod(now),days=0,i;for(i=0;i<30;i++)if(inR(t0-i*DAY,t0-i*DAY+DAY).length)days++;
+  var l15=tot(inR(t0-14*DAY,t0+DAY)),p15=tot(inR(t0-29*DAY,t0-14*DAY)),r=p15?l15/p15:(l15?1.05:0);
+  var all=inR(t0-29*DAY,t0+DAY),rev=tot(all),m=rev?prof(all)/rev:0,np=S.products.length,cp=S.products.filter(function(p){return p.cost>0&&p.stock>=0}).length;
+  var stk=S.products.filter(function(p){return p.stock>0}),dead=stk.filter(function(p){return !soldSince(p.id,30)}).length,dsh=stk.length?dead/stk.length:1;
+  var B=S.biz,parts=[
+   {label:'Sales consistency',max:25,pts:Math.round(days/30*25),tip:'Record sales every trading day. You traded on '+days+' of the last 30 days.'},
+   {label:'Sales growth',max:15,pts:!l15?0:(r>=1.1?15:r>=1?12:r>=.9?8:4),tip:'Grow revenue versus the previous fortnight.'},
+   {label:'Profit margin',max:15,pts:!rev?0:(m>=.25?15:m>=.15?11:m>=.08?6:2),tip:'Lift margin toward 25% by reviewing prices and supplier costs.'},
+   {label:'Stock records',max:10,pts:np?Math.round(cp/np*10):0,tip:'Capture cost price and stock on every product.'},
+   {label:'Stock health',max:10,pts:Math.round(10*(1-dsh)),tip:'Clear slow-moving stock: '+dead+' item'+(dead===1?'':'s')+' with no sales in 30 days.'},
+   {label:'Track record',max:15,pts:Math.round(Math.min(1,S.sales.length/150)*15),tip:'Lenders like history. Keep recording; '+S.sales.length+' of 150 transactions so far.'},
+   {label:'Business profile',max:10,pts:(B.name?4:0)+(B.phone?3:0)+(B.reg?3:0),tip:'Complete your profile in Settings (contact number and registration number).'}];
+  var sc=sum(parts,function(p){return p.pts});return {score:sc,parts:parts,label:sc>=75?'Strong. You look funding-ready.':sc>=50?'Getting there. Work on the tips below.':'Early stage. Keep recording to build your score.'};
+}
+function loan(){
+  if(!plan().ai)return head('Loan Readiness')+locked('Loan readiness is on Growth and above','Score your business 0-100 and get recommendations to become funding-ready.');
+  var L=loanScore(),off=251*(1-L.score/100),ranked=L.parts.filter(function(p){return p.pts<p.max}).sort(function(a,b){return (b.max-b.pts)-(a.max-a.pts)});
+  return head('Loan Readiness','Score based on your own records')+'<div class="grid g2"><div class="card gauge"><svg viewBox="0 0 200 125"><path d="M20 105a80 80 0 0 1 160 0" fill="none" stroke="#252b38" stroke-width="16" stroke-linecap="round"/><path d="M20 105a80 80 0 0 1 160 0" fill="none" stroke="#f59e0b" stroke-width="16" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="'+off+'"/><text x="100" y="98" text-anchor="middle" font-size="42" font-weight="700" fill="#f4f5f7" font-family="Space Grotesk,sans-serif">'+L.score+'</text><text x="100" y="118" text-anchor="middle" font-size="11" fill="#9aa3b2">out of 100</text></svg><div style="text-align:center;color:var(--muted);margin-top:6px">'+L.label+'</div><div style="text-align:center;color:var(--muted);font-size:12px;margin-top:8px">This is a guide only. Lenders make their own decisions.</div></div>'+
+  '<div class="card"><h3>Breakdown</h3>'+L.parts.map(function(p){return '<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:14px"><span>'+p.label+'</span><b>'+p.pts+'/'+p.max+'</b></div><div class="bar"><i style="width:'+p.pts/p.max*100+'%"></i></div></div>'}).join('')+'</div></div>'+
+  '<div class="card" style="margin-top:14px"><h3>How to improve</h3>'+(ranked.length?ranked.map(function(p){return '<div class="tip"><b>'+p.label+' · up to +'+(p.max-p.pts)+' points</b><p>'+esc(p.tip)+'</p></div>'}).join(''):'<div class="tip good"><b>Excellent</b><p>Every area is at full marks. Keep recording daily.</p></div>')+'</div>';
+}
+
+function staff(){
+  var pl=plan();if(pl.users<=1)return head('Staff')+locked('Staff management is on Growth and above','Add cashiers, assign roles and track their performance.');
+  var a=Date.now()-30*DAY;
+  return head('Staff',S.staff.length+' of '+(pl.users>=1e9?'unlimited':pl.users)+' users','<button class="btn pri" data-a="newstaff">＋ Add staff</button>')+'<div class="card">'+S.staff.map(function(s){var l=S.sales.filter(function(x){return x.ts>=a&&x.cashier===s.name});return '<div class="row"><div class="grow"><b>'+esc(s.name)+'</b><div class="m">'+s.role+' · '+l.length+' sales · '+R0(tot(l))+' (30 days)</div></div>'+(s.role!=='Owner'?'<button class="btn sm red" data-a="delstaff" data-id="'+s.id+'">Remove</button>':'<span class="pill a">Owner</span>')+'</div>'}).join('')+'</div><p style="color:var(--muted);font-size:13px;margin-top:12px">Cashiers are chosen at the till on the Sell screen. Sales are tagged to them for performance tracking.</p>';
+}
+
+var SUP=[['Bulk Staples Wholesale','Groceries','Gauteng','Maize meal, rice, sugar, cooking oil','R2 000'],['Fresh Bakery Supply','Bakery','Limpopo','Bread, buns, rusks','R500'],['BuildRight Trade','Hardware','Gauteng','Cement, tools, fittings, paint','R3 000'],['CityMeat Butchery Supply','Butchery','Limpopo','Chicken, beef, packaging','R2 500'],['HealthFirst Distributors','Pharmacy','Gauteng','OTC medicine, first aid, baby care','R1 500'],['QuickServe Catering Supply','Restaurant','Gauteng','Oil, spices, disposables','R1 800'],['AirTopUp Distribution','Airtime','National','Airtime and data vouchers','R500'],['CleanHome Household','Household','Limpopo','Detergents, soap, toiletries','R1 200']];
+function market(){
+  var cats=['All'].concat(SUP.map(function(s){return s[1]})),l=SUP.filter(function(s){return ui.mk==='All'||s[1]===ui.mk});
+  return head('MOCA Market','Browse wholesale suppliers and request quotes')+'<div class="tip"><b>Sample suppliers</b><p>These listings show how MOCA Market will work. Live suppliers will appear here at launch.</p></div>'+
+  '<div class="chips" style="margin:6px 0 12px">'+cats.map(function(c){return '<button class="chip'+(ui.mk===c?' on':'')+'" data-a="mk" data-c="'+c+'">'+c+'</button>'}).join('')+'</div><div class="grid g2">'+
+  l.map(function(s){var i=SUP.indexOf(s);return '<div class="card"><span class="pill b">'+s[1]+'</span><h3 style="margin:10px 0 4px;font-size:17px">'+s[0]+'</h3><div style="color:var(--muted);font-size:14px">'+s[3]+'</div><div style="color:var(--muted);font-size:12px;margin:8px 0 12px">'+s[2]+' · Min order '+s[4]+'</div><button class="btn sm pri" data-a="quote" data-i="'+i+'">Request quote</button></div>'}).join('')+'</div>'+
+  '<div class="card" style="margin-top:14px"><h3>My quote requests</h3>'+(S.quotes.length?S.quotes.slice().reverse().map(function(q){return '<div class="row"><div class="grow"><b>'+esc(q.item)+' × '+esc(q.qty)+'</b><div class="m">'+esc(q.sup)+' · '+new Date(q.ts).toLocaleDateString('en-ZA')+'</div></div><a class="btn sm" target="_blank" rel="noopener noreferrer" href="https://wa.me/?text='+encodeURIComponent('Quote request from '+S.biz.name+': '+q.qty+' × '+q.item+(q.note?' ('+q.note+')':'')+'. Please send your best price and delivery time.')+'">Share on WhatsApp</a></div>'}).join(''):'<div style="color:var(--muted)">No requests yet.</div>')+'</div>';
+}
+
+function settings(){
+  var B=S.biz;return head('Settings',esc(B.name))+'<div class="grid g2"><div class="card"><h3>Business profile</h3><form data-f="profile"><label>Business name</label><input name="name" required value="'+esc(B.name)+'"><label>Owner</label><input name="owner" required value="'+esc(B.owner)+'"><label>Contact number</label><input name="phone" type="tel" value="'+esc(B.phone)+'"><label>Registration number (optional)</label><input name="reg" value="'+esc(B.reg)+'"><button class="btn pri full" style="margin-top:16px" type="submit">Save profile</button></form></div>'+
+  '<div class="card"><h3>Plan</h3><div class="chips" style="flex-wrap:wrap;margin-bottom:10px">'+Object.keys(PL).map(function(k){return '<button class="chip'+(S.plan===k?' on':'')+'" data-a="setplan" data-p="'+k+'">'+PL[k].n+(PL[k].price?' · R'+PL[k].price:'')+'</button>'}).join('')+'</div><div style="color:var(--muted);font-size:13px">Billing isn’t connected yet, so plan changes apply on this device. Starter: 100 products, 1 user. Growth adds unlimited products, 5 users, AI insights and loan readiness. Pro adds unlimited users and MOCA Market quotes.</div>'+
+  '<h3 style="margin-top:22px">Your data</h3><div style="color:var(--muted);font-size:13px;margin-bottom:12px">Everything is stored on this device only. Take a backup regularly.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-a="backup">Back up</button><button class="btn" data-a="restore">Restore</button><button class="btn" data-a="demo">Load demo data</button><button class="btn red" data-a="reset">Erase all</button></div></div></div>';
+}
+function more(){var it=NAV.slice(4);return head('More')+'<div class="menu">'+it.map(function(n){return '<div class="card" data-a="nav" data-v="'+n[0]+'">'+ic(n[0])+'<b>'+n[1]+'</b></div>'}).join('')+'</div>'}
+
+/* ---------- shell ---------- */
+var V={home:home,pos:pos,stock:stock,orders:orders,reports:reports,advisor:advisor,loan:loan,staff:staff,market:market,settings:settings,more:more};
+function render(){
+  if(!S){onboard();return}
+  var mv=['reports','advisor','loan','staff','market','settings'].indexOf(ui.view)>-1?'more':ui.view;
+  $('#root').innerHTML='<div class="app"><aside><div class="brand"><span class="logo">M</span>MOCA</div>'+NAV.map(function(n){return '<button class="ni'+(ui.view===n[0]?' on':'')+'" data-a="nav" data-v="'+n[0]+'">'+ic(n[0])+n[1]+'</button>'}).join('')+'<div class="side-foot">'+esc(S.biz.name)+'<br>'+plan().n+' plan</div></aside><main id="main">'+V[ui.view]()+'</main></div><div class="bn-wrap">'+BN.map(function(n){return '<button class="bn'+(mv===n[0]?' on':'')+'" data-a="nav" data-v="'+n[0]+'">'+ic(n[0])+n[1]+'</button>'}).join('')+'</div>';
+  if(ui.view==='pos')refreshPos();
+}
+function onboard(){
+  $('#root').innerHTML='<div class="ob"><div class="box"><div class="hl">MOCA</div><div style="color:var(--muted);margin:4px 0 6px">Mobile Commerce Africa</div><h3>Set up your business</h3><p class="sub">Free to start. Takes under a minute.</p><form data-f="onboard"><label>Your name</label><input name="owner" required placeholder="e.g. Thabo Mokoena"><label>Business name</label><input name="name" required placeholder="e.g. Thabo’s Spaza"><label>Mobile / WhatsApp number</label><input name="phone" type="tel" placeholder="082 000 0000"><div class="two"><div><label>Business type</label><select name="type"><option>Township business</option><option>Retailer</option><option>Butchery</option><option>Hardware store</option><option>Pharmacy</option><option>Restaurant</option><option>Other</option></select></div><div><label>Plan</label><select name="plan"><option value="starter">Starter · R149</option><option value="growth" selected>Growth · R399</option><option value="pro">Pro · R899</option></select></div></div><button class="btn pri full" style="margin-top:18px;padding:13px" type="submit">Create my account →</button></form><button class="btn full" style="margin-top:10px" data-a="demostart">Explore with demo data</button><p style="color:var(--muted);font-size:12px;margin:14px 0 0">Your records are saved on this device. Use Settings → Back up to keep a copy.</p></div></div>';
+}
+function go(v){ui.view=v;ui.q='';ui.cartOpen=false;render();window.scrollTo(0,0)}
+
+/* ---------- forms/modals ---------- */
+function prodForm(id){var p=id?prod(id):{name:'',cat:'',price:'',cost:'',stock:'',reorder:5};
+  var cats=S.products.map(function(x){return x.cat}).filter(function(v,i,a){return v&&a.indexOf(v)===i});
+  modal('<h3>'+(id?'Edit product':'Add product')+'</h3><form data-f="prod" data-id="'+(id||'')+'"><label>Name</label><input name="name" required value="'+esc(p.name)+'"><label>Category</label><input name="cat" list="cats" value="'+esc(p.cat)+'" placeholder="e.g. Groceries"><datalist id="cats">'+cats.map(function(c){return '<option value="'+esc(c)+'">'}).join('')+'</datalist><div class="two"><div><label>Selling price (R)</label><input name="price" required inputmode="decimal" value="'+esc(p.price)+'"></div><div><label>Cost price (R)</label><input name="cost" required inputmode="decimal" value="'+esc(p.cost)+'"></div><div><label>Stock on hand</label><input name="stock" required inputmode="numeric" value="'+esc(p.stock)+'"></div><div><label>Reorder at</label><input name="reorder" inputmode="numeric" value="'+esc(p.reorder)+'"></div></div><div class="mact">'+(id?'<button type="button" class="btn red" data-a="delprod" data-id="'+id+'">Delete</button>':'')+'<button class="btn pri" type="submit">Save</button></div></form>')}
+function receipt(s){var txt=S.biz.name+' receipt #'+String(s.no).padStart(4,'0')+'\n'+s.items.map(function(i){return i.qty+' x '+i.name+'  '+R(i.qty*i.price)}).join('\n')+(s.disc?'\nDiscount -'+R(s.disc):'')+'\nTotal '+R(s.total)+' ('+s.method+')\nThank you!';
+  modal('<div style="text-align:center;font-size:38px">✅</div><h3 style="text-align:center">Sale complete</h3><p class="sub" style="text-align:center">Receipt #'+String(s.no).padStart(4,'0')+'</p><div style="margin:14px 0">'+s.items.map(function(i){return '<div class="row"><span>'+i.qty+' × '+esc(i.name)+'</span><b>'+R(i.qty*i.price)+'</b></div>'}).join('')+(s.disc?'<div class="row"><span>Discount</span><b class="up">−'+R(s.disc)+'</b></div>':'')+'<div class="row"><b>Total ('+s.method+')</b><b class="sg" style="font-size:20px;color:var(--amber)">'+R(s.total)+'</b></div>'+(s.change!=null?'<div class="row"><span>Change</span><b>'+R(s.change)+'</b></div>':'')+'</div><div class="mact"><a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/?text='+encodeURIComponent(txt)+'">💬 Send receipt</a><button class="btn pri" data-a="close">New sale</button></div>')}
+function orderForm(){ui.ol=[];modal('<h3>New WhatsApp order</h3><form data-f="order"><label>Customer name</label><input name="customer" required><label>WhatsApp number</label><input name="phone" type="tel" placeholder="082 000 0000"><label>Add items</label><div style="display:flex;gap:8px"><select id="op">'+S.products.filter(function(p){return p.stock>0}).map(function(p){return '<option value="'+p.id+'">'+esc(p.name)+' ('+p.stock+')</option>'}).join('')+'</select><input id="oq" value="1" inputmode="numeric" style="width:70px"><button type="button" class="btn" data-a="oadd">Add</button></div><div id="olines" style="margin:10px 0"></div><label>Payment</label><select name="method"><option>Cash on delivery</option><option>EFT</option><option>Card</option></select><button class="btn pri full" style="margin-top:16px" type="submit">Create order</button></form>');olRender()}
+function olRender(){var el=$('#olines');if(!el)return;var t=0;el.innerHTML=ui.ol.length?ui.ol.map(function(l,i){var p=prod(l.pid);t+=p.price*l.qty;return '<div class="row"><span>'+l.qty+' × '+esc(p.name)+'</span><span><b>'+R(p.price*l.qty)+'</b> <button type="button" class="btn sm red" data-a="odel" data-i="'+i+'">×</button></span></div>'}).join('')+'<div class="row"><b>Total</b><b class="sg" style="color:var(--amber)">'+R(t)+'</b></div>':'<div style="color:var(--muted);font-size:13px">No items added yet.</div>'}
+function textModal(title,text,note,restoreMode){modal('<h3>'+title+'</h3><p class="sub">'+note+'</p><textarea class="mono" id="tx" '+(restoreMode?'placeholder="Paste your backup here"':'readonly')+'>'+esc(text)+'</textarea><div class="mact">'+(restoreMode?'<button class="btn pri" data-a="dorestore">Restore</button>':'<button class="btn pri" data-a="copytx">Copy</button>')+'</div>')}
+function csv(rows){return rows.map(function(r){return r.map(function(c){c=String(c==null?'':c);return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c}).join(',')}).join('\n')}
+
+/* ---------- actions ---------- */
+function checkout(){var c=cartCalc();if(!c.lines.length)return;
+  for(var i=0;i<c.lines.length;i++)if(c.lines[i].q>c.lines[i].p.stock){toast('Not enough stock for '+c.lines[i].p.name);return}
+  var tend=num(ui.tender);if(ui.method==='Cash'&&ui.tender&&tend<c.total){toast('Cash received is less than the total');return}
+  var s={id:uid(),no:S.seq++,ts:Date.now(),items:c.lines.map(function(l){return {pid:l.p.id,name:l.p.name,qty:l.q,price:l.p.price,cost:l.p.cost}}),sub:c.sub,disc:c.disc,total:c.total,method:ui.method,cashier:ui.cashier||S.staff[0].name,src:'pos'};
+  c.lines.forEach(function(l){l.p.stock-=l.q});S.sales.push(s);save();
+  s.change=ui.method==='Cash'&&ui.tender?tend-c.total:null;ui.cart={};ui.dval='';ui.tender='';ui.cartOpen=false;render();receipt(s)}
+function addStaffLimit(){return S.staff.length>=plan().users}
+
+document.addEventListener('click',function(e){
+  var m=$('#modal');if(e.target===m){closeM();return}
+  var el=e.target.closest('[data-a]');if(!el)return;var a=el.dataset.a,id=el.dataset.id;
+  switch(a){
+   case 'close':closeM();break;
+   case 'nav':closeM();go(el.dataset.v);break;
+   case 'demo':case 'demostart':
+     if(!S)S=newState({name:'Demo Spaza & Grocer',owner:'Thabo Mokoena',phone:'',plan:'growth'});
+     if((S.products.length||S.sales.length)&&!confirm('This replaces your products and sales with sample data. Continue?'))break;
+     var keep=S.biz;demo();S.biz=keep;save();closeM();ui.view='home';render();toast('Demo data loaded');break;
+   case 'cat':ui.cat=el.dataset.c;render();break;
+   case 'add':var p=prod(id);if(!p)break;if((ui.cart[id]||0)>=p.stock){toast('No more stock');break}ui.cart[id]=(ui.cart[id]||0)+1;refreshPos();break;
+   case 'inc':var p2=prod(id);if((ui.cart[id]||0)<p2.stock)ui.cart[id]++;else toast('No more stock');refreshPos();break;
+   case 'dec':ui.cart[id]--;if(ui.cart[id]<=0)delete ui.cart[id];refreshPos();break;
+   case 'clear':ui.cart={};ui.dval='';ui.tender='';ui.cartOpen=false;refreshPos();break;
+   case 'dtype':ui.dtype=el.dataset.t;refreshPos();break;
+   case 'method':ui.method=el.dataset.m;refreshPos();break;
+   case 'opencart':ui.cartOpen=true;refreshPos();break;
+   case 'closecart':ui.cartOpen=false;refreshPos();break;
+   case 'checkout':checkout();break;
+   case 'newprod':if(S.products.length>=plan().prod){toast('Starter is limited to '+plan().prod+' products. Upgrade in Settings.');break}prodForm();break;
+   case 'editprod':prodForm(id);break;
+   case 'delprod':if(confirm('Delete this product? Past sales are kept.')){S.products=S.products.filter(function(p){return p.id!==id});save();closeM();render();toast('Product deleted')}break;
+   case 'restock':var pp=prod(id);modal('<h3>Add stock</h3><p class="sub">'+esc(pp.name)+' · '+pp.stock+' in stock</p><form data-f="restock" data-id="'+id+'"><label>Units received</label><input name="q" required inputmode="numeric" autofocus><label>New cost price (optional)</label><input name="c" inputmode="decimal" placeholder="'+pp.cost+'"><button class="btn pri full" style="margin-top:16px" type="submit">Add stock</button></form>');break;
+   case 'slow':ui.slow=el.dataset.v==='1';render();break;
+   case 'neworder':if(!S.products.some(function(p){return p.stock>0})){toast('Add stock first');break}orderForm();break;
+   case 'oadd':var pid=$('#op').value,q=Math.max(1,Math.floor(num($('#oq').value))),pr=prod(pid),ex=ui.ol.find(function(l){return l.pid===pid}),have=(ex?ex.qty:0)+q;if(have>pr.stock){toast('Only '+pr.stock+' in stock');break}if(ex)ex.qty=have;else ui.ol.push({pid:pid,qty:q});olRender();break;
+   case 'odel':ui.ol.splice(+el.dataset.i,1);olRender();break;
+   case 'ofilter':ui.ofilter=el.dataset.f;render();break;
+   case 'advance':var o=S.orders.find(function(x){return x.id===id}),ni=ST.indexOf(o.status)+1;o.status=ST[ni];
+     if(o.status==='Delivered'){S.sales.push({id:uid(),no:S.seq++,ts:Date.now(),items:o.items.map(function(i){return {pid:i.pid,name:i.name,qty:i.qty,price:i.price,cost:i.cost}}),sub:o.total,disc:0,total:o.total,method:o.method==='Cash on delivery'?'Cash':o.method,cashier:S.staff[0].name,src:'whatsapp'});toast('Delivered. Sale recorded')}
+     save();render();break;
+   case 'cancelorder':if(confirm('Cancel this order and return the items to stock?')){var o2=S.orders.find(function(x){return x.id===id});o2.items.forEach(function(i){var p=prod(i.pid);if(p)p.stock+=i.qty});o2.status='Cancelled';save();render();toast('Order cancelled')}break;
+   case 'period':ui.period=+el.dataset.p;render();break;
+   case 'export':
+     if(el.dataset.w==='stock')textModal('Stock export',csv([['Product','Category','Price','Cost','Stock','Reorder at']].concat(S.products.map(function(p){return [p.name,p.cat,p.price,p.cost,p.stock,p.reorder]}))),'Copy this CSV and paste it into Excel or Google Sheets.');
+     else textModal('Sales export',csv([['Receipt','Date','Cashier','Method','Source','Items','Discount','Total']].concat(S.sales.slice(-500).map(function(s){return [s.no,new Date(s.ts).toISOString().slice(0,16).replace('T',' '),s.cashier,s.method,s.src,s.items.map(function(i){return i.qty+'x '+i.name}).join('; '),s.disc.toFixed(2),s.total.toFixed(2)]}))),'Your latest 500 sales as CSV. Copy and paste into a spreadsheet.');break;
+   case 'newstaff':if(addStaffLimit()){toast('Your plan allows '+plan().users+' users. Upgrade in Settings.');break}modal('<h3>Add staff</h3><form data-f="staff"><label>Name</label><input name="name" required><label>Role</label><select name="role"><option>Cashier</option><option>Manager</option></select><button class="btn pri full" style="margin-top:16px" type="submit">Add</button></form>');break;
+   case 'delstaff':if(confirm('Remove this person? Their past sales are kept.')){S.staff=S.staff.filter(function(s){return s.id!==id});save();render()}break;
+   case 'mk':ui.mk=el.dataset.c;render();break;
+   case 'quote':if(!plan().mk){modal('<h3>Quotes are on Pro</h3><p class="sub">MOCA Market access is included with the Pro plan.</p><div class="mact"><button class="btn pri" data-a="nav" data-v="settings">Change plan</button></div>');break}var sp=SUP[+el.dataset.i];modal('<h3>Request a quote</h3><p class="sub">'+sp[0]+'</p><form data-f="quote" data-s="'+esc(sp[0])+'"><label>Item</label><input name="item" required placeholder="e.g. Maize meal 10kg"><label>Quantity</label><input name="qty" required placeholder="e.g. 20 bags"><label>Notes (optional)</label><input name="note" placeholder="Delivery date, brand…"><button class="btn pri full" style="margin-top:16px" type="submit">Save request</button></form>');break;
+   case 'setplan':S.plan=el.dataset.p;save();render();toast('Plan set to '+plan().n);break;
+   case 'backup':textModal('Back up your data',JSON.stringify(S),'Copy this text and keep it safe (WhatsApp it to yourself or save in Notes). Use Restore to load it on any device.');break;
+   case 'restore':textModal('Restore data','','Paste a MOCA backup below. This replaces the data on this device.',true);break;
+   case 'dorestore':try{var d=JSON.parse($('#tx').value);if(!d||!d.biz||!Array.isArray(d.products))throw 0;S=d;save();closeM();ui.view='home';render();toast('Data restored')}catch(x){toast('That doesn’t look like a MOCA backup')}break;
+   case 'copytx':var t=$('#tx');t.select();try{navigator.clipboard.writeText(t.value).then(function(){toast('Copied')},function(){document.execCommand('copy');toast('Copied')})}catch(x){try{document.execCommand('copy');toast('Copied')}catch(y){toast('Select and copy manually')}}break;
+   case 'reset':if(confirm('Erase ALL MOCA data on this device? This cannot be undone.')){try{localStorage.removeItem(K)}catch(x){}S=null;ui={view:'home',cat:'All',q:'',cart:{},dtype:'R',dval:'',method:'Cash',tender:'',cashier:null,cartOpen:false,ofilter:'Open',period:30,mk:'All',slow:false,ol:[]};render()}break;
+  }
+});
+
+document.addEventListener('input',function(e){var t=e.target;
+  if(t.id==='pq'){ui.q=t.value;var g=$('#pgrid');if(g)g.innerHTML=grid()}
+  else if(t.id==='sq'){ui.q=t.value;var q=ui.q.toLowerCase();$('#slist').innerHTML=stockList(S.products.filter(function(p){return (!q||p.name.toLowerCase().indexOf(q)>-1||(p.cat||'').toLowerCase().indexOf(q)>-1)&&(!ui.slow||p.stock<=p.reorder)}))}
+  else if(t.id==='dval'){ui.dval=t.value;var c=cartCalc();$('#ctot').textContent=R(c.total);var b=$('#cartbar');if(b)b.lastChild.textContent=R(c.total);var btn=$('[data-a=checkout]');if(btn)btn.textContent='Complete sale · '+R(c.total)}
+  else if(t.id==='tender'){ui.tender=t.value}
+});
+document.addEventListener('change',function(e){if(e.target.id==='cashier')ui.cashier=e.target.value;if(e.target.id==='tender')refreshPos(true);if(e.target.id==='dval')refreshPos(true)});
+
+document.addEventListener('submit',function(e){var f=e.target.closest('form[data-f]');if(!f)return;e.preventDefault();var n=f.dataset.f,d={};Array.prototype.forEach.call(f.elements,function(x){if(x.name)d[x.name]=x.value.trim()});
+  if(n==='onboard'){S=newState(d);save();ui.view='home';render();toast('Welcome to MOCA');return}
+  if(n==='profile'){S.biz.name=d.name;S.biz.owner=d.owner;S.biz.phone=d.phone;S.biz.reg=d.reg;S.staff[0].name=d.owner;save();render();toast('Profile saved');return}
+  if(n==='prod'){var id=f.dataset.id,o={name:d.name,cat:d.cat,price:num(d.price),cost:num(d.cost),stock:Math.max(0,Math.floor(num(d.stock))),reorder:Math.max(0,Math.floor(num(d.reorder)))};
+    if(!o.name||o.price<=0){toast('Enter a name and selling price');return}
+    if(id){Object.assign(prod(id),o)}else{if(S.products.length>=plan().prod){toast('Product limit reached for your plan');return}o.id=uid();S.products.push(o)}
+    save();closeM();render();toast('Product saved');return}
+  if(n==='restock'){var p=prod(f.dataset.id),q=Math.floor(num(d.q));if(q<=0){toast('Enter units received');return}p.stock+=q;if(num(d.c)>0)p.cost=num(d.c);save();closeM();render();toast('Stock updated');return}
+  if(n==='order'){if(!ui.ol.length){toast('Add at least one item');return}
+    var items=ui.ol.map(function(l){var p=prod(l.pid);return {pid:p.id,name:p.name,qty:l.qty,price:p.price,cost:p.cost}});items.forEach(function(i){prod(i.pid).stock-=i.qty});
+    S.orders.push({id:uid(),no:S.oseq++,ts:Date.now(),customer:d.customer,phone:d.phone,method:d.method,items:items,total:sum(items,function(i){return i.price*i.qty}),status:'New'});save();closeM();ui.ofilter='Open';render();toast('Order created. Stock reserved');return}
+  if(n==='staff'){S.staff.push({id:uid(),name:d.name,role:d.role});save();closeM();render();toast('Staff added');return}
+  if(n==='quote'){S.quotes.push({ts:Date.now(),sup:f.dataset.s,item:d.item,qty:d.qty,note:d.note});save();closeM();render();toast('Quote request saved');return}
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM()});
+load();render();
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('./sw.js').catch(function(){});
+  });
+}
+})();
+</script>
+</body>
+</html>
